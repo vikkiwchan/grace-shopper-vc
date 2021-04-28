@@ -8,7 +8,7 @@
     "build:dev": "webpack --watch --mode=development",
     "seed": "node server/db/seed.js",
     "start": "node server/index.js",
-    "start:dev": "nodemon server/index.js",
+    "start:dev": "nodemon server/appListen.js",
     "test": "mocha",
     "test:dev": "DATABASE_URL=postgres://localhost/grace_shopper_test mocha --watch"
   },

@@ -1,7 +1,6 @@
 const path = require('path');
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 3000;
 const morgan = require('morgan');
 
 //Body parsing middleware
@@ -15,10 +14,6 @@ app.use(morgan('dev'));
 
 // app.use('/api/products', require('./Products'));
 app.use('/api/users', require('./Users'));
-
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
-});
 
 // Error hander
 
