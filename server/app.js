@@ -13,6 +13,7 @@ app.use(morgan('dev'));
 
 app.use('/api/products', require('./api/Products'));
 app.use('/api/users', require('./api/Users'));
+app.use('/api/auth', require('./api/Auth'));
 
 // Error hander
 
