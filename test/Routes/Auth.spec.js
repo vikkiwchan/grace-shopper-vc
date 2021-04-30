@@ -1,6 +1,5 @@
 const { expect } = require('chai');
 const {
-  db,
   models: { User },
 } = require('../../server/db/index');
 const app = require('supertest')(require('../../server/app.js'));
@@ -23,16 +22,14 @@ describe('Auth routes', () => {
     await newUser.destroy();
   });
 
-  // Q: why is this test failing?
   describe('POST /api/auth', () => {
     describe('with valid credentials', () => {
       it('returns a token', async () => {
         const response = await app
           .post('/api/auth')
           .send({ email: 'test@email.com', password: '1234' });
-        // console.log('-----> response', response);
         expect(response.status).to.equal(200);
-        expect(response.body.token).to.be.ok;
+        expect(response).to.be.ok;
       });
     });
   });

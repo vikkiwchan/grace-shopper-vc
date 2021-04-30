@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 const morgan = require('morgan');
 
 //Body parsing middleware
@@ -8,6 +9,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(morgan('dev'));
+
+// Static Files
+
+app.use(express.static(path.join(__dirname, '..', 'public')));
+app.get('/', (req, res, next) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+});
 
 // Routes for products and users
 
@@ -19,7 +27,7 @@ app.use('/api/auth', require('./api/Auth'));
 
 app.use((er, req, res, next) => {
   console.error(er.stack);
-  res.status(500).send({ error: er });
+  res.status(er.status || 500).send({ error: er });
 });
 
 module.exports = app;
