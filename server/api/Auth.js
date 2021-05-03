@@ -1,5 +1,5 @@
 const {
-  models: { User },
+  models: { User, Cart },
 } = require('../db/index');
 const router = require('express').Router();
 
@@ -21,10 +21,31 @@ router.get('/', async (req, res, next) => {
   try {
     // class method handles logic for the token
     const user = await User.verifyByToken(req.headers.authorization);
-    res.send(user);
+    const { id } = user;
+    const cart = await Cart.findOne({ where: { userId: id } });
+    let cartItems = [];
+    if (cart) {
+      cartItems = await cart.getProducts();
+    }
+    res.send({ user, cartItems });
   } catch (err) {
     next(err);
   }
 });
+
+// GET /api/auth/cart
+// get cart items for both guest and registered users
+// router.get('/cart', async (req, res, next) => {
+//   try {
+//     // find cart by accessing the id of user from their token
+//     const user = await User.verifyByToken(req.headers.authorization);
+//     const { id } = user;
+//     const cart = await Cart.findOne({ where: { userId: id } });
+//     const products = await cart.getProducts();
+//     res.send(products);
+//   } catch (er) {
+//     next(er);
+//   }
+// });
 
 module.exports = router;

@@ -41,4 +41,19 @@ describe('POST /api/auth', () => {
   });
 });
 
+describe.only('GET /api/auth', () => {
+  test("with valid credentials it returns a user's cart", async () => {
+    const token = await User.authentication({
+      email: 'test@email.com',
+      password: '1234',
+    });
+    console.log('-----> GET /api/auth');
+    const response = await agent.get('/api/auth/', {
+      headers: {
+        authorization: token,
+      },
+    }).data; // should expect 0
+  });
+});
+
 // still need to add a couple of tests
